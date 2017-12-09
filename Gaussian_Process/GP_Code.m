@@ -1,5 +1,5 @@
-getMNISTdata();
-% getCIFARdata();
+getMNISTdata;
+% getCIFARdata;
 
 % Use ReLU as activation function
 psi = 'ReLU';
@@ -8,9 +8,9 @@ psi = 'ReLU';
 psi = @(u) tanh(u);
 
 % "Training" of gaussian process
-[K,F] = getKernel(training_data,psi);
+[K,F] = getKernel(training_data(1:100,:),psi);
 
 
-Y_Hat = predict(test_data,training_data,training_labels,K,F);
+Y_Hat = predict(test_data(1:100,:),training_data(1:100,:),training_labels(1:100),K,F);
 
-Accuracy = sum(Y_Hat == test_labels);
+Accuracy = sum(Y_Hat == test_labels(1:100));

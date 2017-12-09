@@ -6,12 +6,14 @@
 
 function [K,F] = getKernel(X,psi)
 
-	[u,s,c,Network_Depth] = auxFunc();
+	[u,s,c,Network_Depth,sig_w,sig_b] = auxFunc();
 
 	K = [];
 	K_aux = [];
 
-	N = size(X,1);
+	[N d_in] = size(X);
+
+	
 
 	% Calculate base-case for layer 0 
 	for i = 1:N
@@ -21,11 +23,17 @@ function [K,F] = getKernel(X,psi)
 	end
 
 	% Use their calculated analytical form for ReLU kernel
-	if(psi == 'ReLU')
+	if(isstr(psi))
+		h = waitbar(1/Network_Depth,'Layer 0');
+		if(psi ~= 'ReLU')
+			disp('Error');
+			return;
+		end
 		for l = 2:Network_Depth
+			waitbar(l/Network_Depth,h,['Layer' int2str(l-1)]);
 			for i = 1:N
 				for j = 1:N
-					T = acos(K(i,j)/sqrt(K(i,i)*K(j,j));
+					T = acos(K(i,j)/sqrt(K(i,i)*K(j,j)));
 					K_aux(i,j) = sig_b^2 + sig_w^2/(2*pi) * sqrt(K(i,i)*K(j,j)) * sin(T) + sig_w^2/(2*pi) * (pi - T) * K(i,j);
 				end
 			end
@@ -36,7 +44,10 @@ function [K,F] = getKernel(X,psi)
 		% first dimension is s dimension and second is the c dimension
 		F = F_Phi_Matrix(u,s,c,psi);
 
+		h = waitbar(1/Network_Depth,'Layer 1');
+
 		for l = 2:Network_Depth
+			waitbar(l/Network_Depth,h,['Layer' int2str(l-1)]);
 			for i = 1:N
 				PK = K(i,i);
 				for j = 1:N
@@ -47,22 +58,29 @@ function [K,F] = getKernel(X,psi)
 		end
 	end
 
+	close(h);
+
 end
 
 function F = F_Phi_Matrix(u,s,c,psi)
 
-	for i = 1:I
+
+	I = length(s);
+	J = length(c);
+	
+	[A,B] = meshgrid(u,u);
+
+
+	parfor i = 1:I
+		disp(i);
 		for j = 1:J
-			NUM = 0;
-			DEM = 0;
-			for a = 1:A
-				for b = 1:B
-					X = -[u(a) u(b)]*inv([s(i) s(i)*c(j); s(i)*c(j) s(i)])*[u(a);u(b)];
-					NUM = NUM + psi(u(a))*psi(u(b))*exp(X);
-					DEM = DEM + exp(X);
-				end
+			if(s(i) == 0 || abs(c(j)) == 1)
+				F(i,j) = 0;
+			else
+				X = (A.^2 - c(j) * A .* B - c(j) * B .* A - B.^2) / (s(i) - s(i)*c(j)^2);
+				Y = psi(A).*psi(B);
+				F(i,j) = sum(sum(Y.*X))/sum(sum(X));
 			end
-			F(i,j) = NUM/DEM;
 		end
 	end
 

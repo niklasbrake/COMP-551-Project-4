@@ -1,11 +1,11 @@
 function [mu,sig] = predict(x,X,Y,K_DD,F)
 
-	[~,s,c,~,Network_Depth] = auxFunc();
+	[~,s,c,~,Network_Depth,sig_w,sig_b] = auxFunc();
 
 	K_xD = [];
 	K_aux = [];
 
-	N = size(X,1);
+	[N d_in] = size(X);
 
 	for i = 1:N
 		K_xD(i) = sig_b^2+sib_w^2*(dot(x,X(i,:)))/d_in;
