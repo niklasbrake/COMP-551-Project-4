@@ -10,9 +10,6 @@ function F = getLUT(u,s,c,psi)
 
 	Y = psi(A).*psi(B);
 
-	inf_corr = 2^50;
-	zero_corr =  2^-50;
-
 	% h = waitbar(1/I,'Row 0');
 	parfor i = 1:I
 		% waitbar(i/I,h,['Row ' int2str(i-1)]);

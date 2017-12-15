@@ -33,4 +33,4 @@ save(['MNIST_' psi '_Kernel_N=' int2str(N) '.mat'],'K','inv_K');
 
 Accuracy(itt) = sum(Y_Hat == test_labels(1:N2)) / N2;
 
-disp(['Accuracy: ' num2str(Accuracy(i))]);
+disp(['Accuracy: ' num2str(Accuracy(itt))]);

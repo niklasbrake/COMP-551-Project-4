@@ -1,6 +1,6 @@
-function [mu,sig] = predict(X_T,X,Y,psi)
+function [mu,sig] = predict(X_T,X,Y,psi,Network_Depth,sig_w,sig_b)
 
-	[~,s,c,Network_Depth,sig_w,sig_b] = auxFunc();
+	[~,s,c,~,~,~] = auxFunc();
 
 	sig_eps = 0;
 
