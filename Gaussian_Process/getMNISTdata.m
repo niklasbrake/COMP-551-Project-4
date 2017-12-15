@@ -1,4 +1,4 @@
-
+DataFolder = 'C:\Users\Niklas Brake\Documents\01 Education\School\040 Computer Science\COMP 551\Project 4';
 %%%%%%%%%%%%%%%%%%%%%% Training Data %%%%%%%%%%%%%%%%%%%%%%
 % [offset] [type]          [value]          [description] 
 % 0000     32 bit integer  0x00000803(2051) magic number 
@@ -10,13 +10,13 @@
 % ........ 
 % xxxx     unsigned byte   ??               pixel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fid = fopen(fullfile('C:\Users\Niklas Brake\Documents\01 Education\School\040 Computer Science\COMP 551\Project 4','MNIST','train-images.idx3-ubyte'));
+fid = fopen(fullfile(DataFolder,'MNIST','train-images.idx3-ubyte'));
 info = fread(fid,4,'int32','b');
 training_data = fread(fid,[info(3)*info(4) info(2)],'uint8','b')';
 
 % Normalize each vector
 for i = 1:info(2)
-	training_data(i,:) = training_data(i,:)/norm(training_data(i,:)) * 28*28;
+	training_data(i,:) = training_data(i,:)/norm(training_data(i,:)) * 28;
 end
 
 %%%%%%%%%%%%%%%%%%%%% Training Labels %%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +28,7 @@ end
 % ........ 
 % xxxx     unsigned byte   ??               label
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fid = fopen(fullfile('C:\Users\Niklas Brake\Documents\01 Education\School\040 Computer Science\COMP 551\Project 4','MNIST','train-labels.idx1-ubyte'));
+fid = fopen(fullfile(DataFolder,'MNIST','train-labels.idx1-ubyte'));
 info = fread(fid,2,'int32','b');
 training_labels = fread(fid,'uint8','b');
 
@@ -44,13 +44,13 @@ training_labels = fread(fid,'uint8','b');
 % ........ 
 % xxxx     unsigned byte   ??               pixel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fid = fopen(fullfile('C:\Users\Niklas Brake\Documents\01 Education\School\040 Computer Science\COMP 551\Project 4','MNIST','t10k-images.idx3-ubyte'));
+fid = fopen(fullfile(DataFolder,'MNIST','t10k-images.idx3-ubyte'));
 info = fread(fid,4,'int32','b');
 test_data = fread(fid,[info(3)*info(4) info(2)],'uint8','b')';
 
 % Normalize each vector
 for i = 1:info(2)
-	test_data(i,:) = test_data(i,:)/norm(test_data(i,:)) * 28*28;
+	test_data(i,:) = test_data(i,:)/norm(test_data(i,:)) * 28;
 end
 
 %%%%%%%%%%%%%%%%%%%%%%% Test Labels %%%%%%%%%%%%%%%%%%%%%%%
@@ -62,7 +62,7 @@ end
 % ........ 
 % xxxx     unsigned byte   ??               label
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fid = fopen(fullfile('C:\Users\Niklas Brake\Documents\01 Education\School\040 Computer Science\COMP 551\Project 4','MNIST','t10k-labels.idx1-ubyte'));
+fid = fopen(fullfile(DataFolder,'MNIST','t10k-labels.idx1-ubyte'));
 info = fread(fid,2,'int32','b');
 test_labels = fread(fid,'uint8','b');
 
