@@ -10,17 +10,18 @@ function F = getLUT(u,s,c,psi)
 
 	Y = psi(A).*psi(B);
 
-	% h = waitbar(1/I,'Row 0');
 	parfor i = 1:I
-		% waitbar(i/I,h,['Row ' int2str(i-1)]);
 		for j = 1:J
 			if(abs(c(j)) == 1)
 				F(i,j) = 1;
 			else
 				X = exp(-((AS - 2* c(j) * A .* B + BS) ./ (s(i) - s(i)*c(j)^2)));
 				ssumm = sum(sum(X));
+
+				% If ((AS - 2* c(j) * A .* B + BS) ./ (s(i) - s(i)*c(j)^2)) ~= Inf
 				if(ssumm == 0)
 					F(i,j) = 1;
+				% If ((AS - 2* c(j) * A .* B + BS) ./ (s(i) - s(i)*c(j)^2)) ~= - Inf
 				elseif(ssumm == Inf)
 					F(i,j) = -1;
 				else

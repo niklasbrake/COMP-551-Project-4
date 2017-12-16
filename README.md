@@ -1,4 +1,5 @@
-# COMP-551-Project-4
+# COMP 551: Applied Machine Learning
+Professor Joelle Pineau
 
 ## Project 4 Outline
 Background: One of the challenges in machine learning research is to ensure that published results are

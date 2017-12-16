@@ -12,7 +12,7 @@ function [u,s,c,Network_Depth,sig_w,sig_b] = auxFunc()
 
 	u = linspace(-u_max,u_max,n_g);
 	s = linspace(0,s_max,n_v);
-	s = s(2:end);
+	s = s(2:end); % Remove s = 0
 	c = linspace(-1,1,n_c);
 
 end
